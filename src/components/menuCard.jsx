@@ -11,25 +11,32 @@ const menuCard = ({menuData}) => {
              <div className="card">
              <div className="card-body">
               <span className="card-number card-circle subtle">{curElem.id}</span>
-              {/* <span className="card-author subtle">{curElem.name}</span> */}
+              <span className="card-author subtle">{curElem.name}</span> 
               <h2 className="card-title">{curElem.name}</h2>
-              {/* <span className="card-price"></span>
-                  {formatPrice(price)}
-                <div className="card-rating">
-                  <span className='card-rating'>{curElem.rate}
-                  </span>
-                  <span className="subtle" >{curElem.rating}
-                    ({rating.count || 0})
-                  </span>
-              */}
-              <span className="card-description subtle">{curElem.description}</span>
+              
+              
+              <div className="card-description subtle">{curElem.description}</div>
               <div className="card-read">Read</div>
             </div>
-            <img src={curElem.image} alt="images" className="card-media" />
 
-            <span className="card-tag subtle">Order Now</span>
-          </div>
-         </div>
+            
+                 <div className="card-rating">
+                      <div className="card-price">₹{curElem.price}</div>
+                      <div className='card-rating'>⭐{curElem.rating.rate}</div>
+                      <div className="subtle" >{curElem.rating.count}</div>
+                      </div>
+                
+
+                     <img src={curElem.image} alt="images" className="card-media" />
+
+                     <div className="btn">
+                      <button>Edit</button>
+                      <button>Delete</button>
+                     </div>
+
+                    <span className="card-tag subtle">Order Now</span>
+                </div>
+           </div>
            );
          })}
          </section>
