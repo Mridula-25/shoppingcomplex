@@ -1,0 +1,166 @@
+
+
+/* Container holding all cards */
+.main-card--container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  padding: 30px;
+  background: #f8f9fa;
+}
+
+/* Container for all cards */
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px;
+}
+
+/* Card */
+.card {
+  position: relative;
+  width: 300px;
+  height: 480px;
+  border: 1px solid #ddd;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Card Body */
+.card-body {
+  padding: 16px;
+  flex: 1;
+}
+
+.card-author {
+  font-size: 14px;
+  color: #888;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 5px 0;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;     /* ✅ max 3 lines */
+  -webkit-box-orient: vertical;
+  line-clamp: 2;             /* standard property */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.card-description {
+  font-size: 14px;
+  color: #555;
+  margin: 8px 0;
+
+  display: -webkit-box;        /* old webkit syntax */
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;       /* Chrome, Safari, Edge */
+
+  display: box;                /* legacy fallback */
+  box-orient: vertical;
+
+  line-clamp: 3;               /* ✅ standard property */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-read {
+  font-size: 13px;
+  color: #2196f3;
+  cursor: pointer;
+}
+
+/* Rating + Price Section */
+.card-rating {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px 10px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Product Image */
+.card-media {
+  width: 90%;
+  max-height: 200px;      /* ✅ never larger than 200px */
+  object-fit: contain;    /* show whole image without distortion */
+  padding: 0 5%;
+  display: block;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-around; /* space buttons evenly */
+  padding: 10px;
+  gap: 10px; /* spacing between buttons */
+}
+
+.card-actions button {
+  flex: 1;                      /* equal width */
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  font-size: 14px;
+  transition: background 0.2s ease-in-out;
+}
+
+.card-actions button:nth-child(1) { background: #2196f3; } /* Edit */
+.card-actions button:nth-child(2) { background: #f44336; } /* Delete */
+.card-actions .order-btn { background: #ff9800; }          /* Order Now */
+
+.card-actions button:hover {
+  opacity: 0.9;
+}
+
+
+/* ************** */
+.add-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+
+  /* shadow */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+
+  /* position fixed bottom-right */
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+
+  transition: all 0.2s ease-in-out;
+}
+
+.add-btn:hover {
+  background-color: #007bff;
+
+  /* optional: make shadow stronger on hover */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.add-btn:active {
+  transform: translateY(4px); /* moves 4px down */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3); /* shadow smaller */
+  background-color: #1E88E5; /* darker color on press */
+}

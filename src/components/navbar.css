@@ -1,0 +1,46 @@
+/* Navbar container */
+.navbar {
+  width: 100%;
+  background: #ffffff;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Button group wrapper */
+.btn-group {
+  display: flex;
+  gap: 10px;
+}
+
+/* Button style */
+.btn-group__item {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: capitalize;
+  border: 2px solid #007bff;
+  border-radius: 25px;
+  background-color: transparent;
+  color: #007bff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Hover & active states */
+.btn-group__item:hover {
+  background-color: #007bff;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.btn-group__item:active {
+  background-color: #0056b3;
+  border-color: #0056b3;
+  transform: translateY(0);
+}
