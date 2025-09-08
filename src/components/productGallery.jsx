@@ -1,16 +1,14 @@
 import React from 'react'
-import "./productGallery.css";
+import styles from "./productGallery.module.css";
 import ProductView from './productView';
-import Loader from './loader';
 
-const ProductGallery = ({ products, onDelete }) => {
-    console.log(products)
+const ProductGallery = ({ products, onUpdate, onDelete }) => {
     return (
         <>
-            <section className='main-card--container'>{
+            <section className={styles["main-card--container"]}>{
                 products.map((curElem) => {
                     return (
-                        <ProductView product={curElem} onDelete={onDelete} />
+                        <ProductView product={curElem} onUpdate={onUpdate} onDelete={onDelete} />
                     );
                 })}
             </section>

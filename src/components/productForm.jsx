@@ -1,117 +1,134 @@
 import React, { useState, useEffect } from "react";
-import './productForm.css';
+import styles from "./productForm.module.css";
+import Loader from "./loader";
 
 const ProductForm = ({ product, onSave, onCancel }) => {
-    // Initialize form state (use product if editing)
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState("");
-    const [rating, setRating] = useState({ rate: "", count: "" });
-    const [image, setImage] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
+  const [rating, setRating] = useState({ rate: "", count: "" });
+  const [image, setImage] = useState(null);
+  const [preview, setPreview] = useState(null);
 
-    // Populate form if editing
-    useEffect(() => {
-        if (product) {
-            setName(product.name || "");
-            setDescription(product.description || "");
-            setPrice(product.price || "");
-            setRating({
-                rate: product.rating?.rate || "",
-                count: product.rating?.count || "",
-            });
-            setImage(product.image || "");
-        }
-    }, [product]);
+  const [loading, setLoading] = useState(false);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        // Prepare product object
-        const newProduct = {
-            id: product?.id || Date.now(),
-            name,
-            description,
-            price,
-            rating: {
-                rate: rating.rate,
-                count: rating.count,
-            },
-            image,
-        };
-        onSave(newProduct); // call parent save function
-        // Reset form (optional)
-        setName("");
-        setDescription("");
-        setPrice("");
-        setRating({ rate: "", count: "" });
-        setImage("");
+  useEffect(() => {
+    if (product) {
+      setTitle(product.title || "");
+      setDescription(product.description || "");
+      setPrice(product.price || "");
+      setCategory(product.category || "");
+      setRating({
+        rate: product.rating?.rate || "",
+        count: product.rating?.count || "",
+      });
+      if (product.image) setPreview(product.image);
+    }
+  }, [product]);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => setPreview(reader.result);
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const newProduct = {
+      id: product?.id || Date.now(),
+      title,
+      price,
+      description,
+      category,
+      image: image || product?.image || null,
+      rating,
     };
+    setLoading(true);
+    await onSave(newProduct);
+    setLoading(false);
+    onCancel();
+  };
 
-    return (
-        <div className="form-container">
-            <form onSubmit={handleSubmit} className="product-form">
-                <h2>{product ? "Edit Product" : "Add Product"}</h2>
+  return (
+    <div className={styles["modal-overlay"]}>
+      <div className={styles["modal-card"]}>
+        {loading && (<Loader/>)}
+        <form onSubmit={handleSubmit} className={styles["product-form"]}>
+          <h2 className={styles["card-title"]}>{product ? "Edit Product" : "Add Product"}</h2>
 
-                <label>Name:</label>
-                <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                />
+          <input
+            type="text"
+            placeholder="Product Name"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
 
-                <label>Description:</label>
-                <textarea
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
-                />
+          <textarea
+            placeholder="Product Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
 
-                <label>Price:</label>
-                <input
-                    type="number"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    required
-                />
+          <input
+            type="number"
+            placeholder="Price"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            required
+          />
 
-                <label>Rating:</label>
-                <div className="rating-inputs">
-                    <input
-                        type="number"
-                        placeholder="Rate"
-                        value={rating.rate}
-                        onChange={(e) => setRating({ ...rating, rate: e.target.value })}
-                        required
-                    />
-                    <input
-                        type="number"
-                        placeholder="Count"
-                        value={rating.count}
-                        onChange={(e) => setRating({ ...rating, count: e.target.value })}
-                        required
-                    />
-                </div>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className={styles["form-select"]}
+            required>
+            <option value="">Select Category</option>
+            <option value="men's clothing">Men's Clothing</option>
+            <option value="women's clothing">Women's Clothing</option>
+            <option value="jewelery">Jewelery</option>
+            <option value="electronics">Electronics</option>
+          </select>
 
+          <div className={styles["rating-inputs"]}>
+            <input
+              type="number"
+              placeholder="Rating (0-5)"
+              value={rating.rate}
+              onChange={(e) => setRating({ ...rating, rate: e.target.value })}
+              required
+            />
+            <input
+              type="number"
+              placeholder="Review Count"
+              value={rating.count}
+              onChange={(e) => setRating({ ...rating, count: e.target.value })}
+              required
+            />
+          </div>
 
-                <label>Image URL:</label>
-                <input
-                    type="text"
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                    required
-                />
+          <input type="file" accept="image/*" onChange={handleImageChange} />
 
-                <div className="form-buttons">
-                    <button type="submit">{product ? "Update" : "Add"}</button>
-                    {onCancel && (
-                        <button type="button" onClick={onCancel}>
-                            Cancel
-                        </button>
-                    )}
-                </div>
-            </form>
-        </div>
-    );
+          {preview && <img src={preview} alt="Preview" className={styles["preview-image"]} />}
+
+          <div className={styles["card-actions"]}>
+            <button type="submit" className={`${styles["btn"]} ${styles["btn-blue"]}`} onClick={handleSubmit}>
+              {product ? "Update" : "Add"}
+            </button>
+            <button type="button" className={`${styles["btn"]} ${styles["btn-red"]}`} onClick={onCancel}>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default ProductForm;

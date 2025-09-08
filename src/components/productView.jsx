@@ -1,44 +1,43 @@
 import React, { useState } from 'react'
-import { deleteProduct } from '../Api';
 import Loader from './loader';
+import styles from "./productView.module.css";
 
-const ProductView = ({ product, onDelete }) => {
+const ProductView = ({ product, onUpdate, onDelete }) => {
 
   const [loading, setLoading] = useState(false);
   const handleOnDelete = async (id) => {
     setLoading(true);
-    const res = await onDelete(id);
+    await onDelete(id);
     setLoading(false);
   }
 
-
   return (
-    <div className="card-container" key={product.id}>
-      <div className="card">
+    <div className={styles["card-container"]} key={product.id}>
+      <div className={styles["card"]}>
         {loading && (
           <Loader />
         )}
 
-        <div className="card-body">
-          <h2 className="card-title">{product.title}</h2>
-          <div className="card-description subtle">{product.description}</div>
-          <div className="card-read">more</div>
+        <div className={styles["card-body"]}>
+          <h2 className={styles["card-title"]}>{product.title}</h2>
+          <div className={`${styles["card-description"]} ${styles["subtle"]}`}>{product.description}</div>
+          <div className={styles["card-read"]}>more</div>
         </div>
 
 
-        <div className="card-rating">
-          <div className="card-price">₹{product.price}</div>
-          <div className='card-rating'>⭐{product.rating.rate}</div>
-          <div className="subtle" >{product.rating.count}</div>
+        <div className={styles["card-rating"]}>
+          <div className={styles["card-price"]}>₹{product.price}</div>
+          <div className={styles["card-rating"]}>⭐{product.rating.rate}</div>
+          <div className={styles["subtle"]} >{product.rating.count}</div>
         </div>
 
+        {console.log(product.image)}
+        <img src={product.image} alt="images" className={styles["card-media"]} />
 
-        <img src={product.image} alt="images" className="card-media" />
-
-        <div className="card-actions">
-          <button>Edit</button>
+        <div className={styles["card-actions"]}>
+          <button onClick={() => onUpdate(product)}>Edit</button>
           <button onClick={() => handleOnDelete(product.id)}>Delete</button>
-          <button className="order-btn">Order Now</button>
+          <button className={styles["order-btn"]}>Order Now</button>
         </div>
 
 

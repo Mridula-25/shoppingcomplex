@@ -1,12 +1,13 @@
 import React from "react";
-import './loader.css';
+import styles from './loader.module.css';
 
 const Loader = () => {
   return (
-    <div className="modal">
-      <div className="loader"></div>
+    <div className={styles["modal"]}>
+      <div className={styles["loader"]}></div>
     </div>
   );
 };
+
 
 export default Loader;

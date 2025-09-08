@@ -1,0 +1,34 @@
+/* ************** */
+.add-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background-color: #28a745;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+
+  /* shadow */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+
+  /* position fixed bottom-right */
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+
+  transition: all 0.2s ease-in-out;
+}
+
+.add-btn:hover {
+  background-color: #007bff;
+
+  /* optional: make shadow stronger on hover */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.add-btn:active {
+  transform: translateY(4px); /* moves 4px down */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3); /* shadow smaller */
+  background-color: #1E88E5; /* darker color on press */
+}
